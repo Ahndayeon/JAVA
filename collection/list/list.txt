@@ -1,1 +1,119 @@
 
+## 객체
+→ 객체는 속성과 기능으로 이루어져 있다
+
+class 클래스명 {     
+
+     **속성(변수)**
+
+     생성자(기본 생성자) - 필요에 따라 사용(기본 생성자는 없어서는 안된다)
+
+     **기능(메소드)**
+
+}
+
+## Collection
+collection framework : 데이터를 저장하는 방식, 다수의 데이터를 쉽고, 효과적으로 처리할 수 있는 표준화된 방법을 제공하는 클래스의 집합 → 자료 구조(변수), 주소값을 받음
+
+⇒ 데이터를 저장하는 자료 구조와 데이터를 처리하는 알고리즘을 구조화 하여 클래스로 구현
+
+⇒ 지정해야하는 크기가 없다. 무한으로 데이터를 받을 수 있다
+
+⇒ 데이터 타입 : Object 타입
+
+*framework : 구조화 되어있다
+
+*인터페이스 : 상위에서 하위로 내려 표준화 시킴.
+
+- 주요 인터페이스
+1. list : **순서가 있는** 데이터의 집합, 데이터의 중복을 허용    / 구현 클래스 : **ArrayList**, Vector, LinkedList, Stack, Queue
+2. set : **순서가 없는** 데이터의 집합, **데이터의 중복을 허용하지 않는다**    / 구현 클래스 : **HashSet**, TreeSet
+- 중복된 값을 걸러 주기 때문에 따로 중복을 여부를 판단할 필요가 없다(ex - 로또 번호 )
+1. map : 키(K)와 값(V)의 한쌍으로 이루어지는 데이터의 집합으로, 순서가 없음. **키는 중복을 허용하지 않지만** **값은 중복될 수 있음**    / 구현 클래스 : **HashMap**, TreeMap, Hashtable, Properties
+- K :  V를 사용하기 위한 정보
+- ex - 전화번호 관리, 회원 정보 관리
+
+⇒ list와 set은 collection 인터페이스를 상속받지만 map은 별도로 정의
+
+*** List
+- ArrayList
+
+→ 기본적으로 크기가 10인 object 타입으로 생성된다 (하지만 크기는 알아서 늘어나기 때문에 크게 의미는 없다)
+⇒ CRUD : 생성,읽기, 업데이트, 삭제 가능
+
+⇒ 모든 collection은 CRUD가 기본이 된다
+-code
+package com.list;
+
+import java.util.ArrayList;
+
+public class Arraylisttest {
+
+public static void main(String[] args) {
+
+	// 객체 생성
+	ArrayList list = new ArrayList(); // 배열 구조 //크기를 지정할 수는 있지만 크게 의미는 없다
+
+	// 쓰기
+	list.add(new String("5")); // 객체 정보 넣기 //캐스팅
+	list.add("1"); // 이렇게 넣어도 가능( 따로 지정하지 않아도 알아서 String타입으로 넣어진다
+	list.add("4");
+	list.add("3"); // index 3
+	list.add("2");
+	list.add("2"); // index 5
+
+	// 읽기
+	String s1 = (String) list.get(0); // 0번째 인덱스 값을 읽어옴 //다운캐스팅
+	String s2 = (String) list.get(4);
+	String s3 = (String) list.get(5);
+
+	System.out.println("s1 : " + s1.toString());
+	System.out.println("s2 : " + s2);
+	System.out.println("s3 : " + s3); // 중복 허용
+
+	// 수정
+	list.set(3, "AA");
+	String s4 = (String) list.get(3);
+	System.out.println("s4 : " + s4);
+
+	// 데이터 크기
+	System.out.println("arraylist가 데이터를 가지고 있는 크기 : " + list.size());
+
+	// 삭제
+	list.remove(5);
+	System.out.println("삭제 후 데이터 크기 : " + list.size());
+
+	list.remove(2);
+	System.out.println("삭제 후의 list의 인덱스 2의 값 : " + list.get(2));
+	System.out.println("삭제 후의 list의 인덱스 3의 값 : " + list.get(3));
+}
+}
+
+
+→ [**add**](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html#add-E-)([**E**](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html) e) : 데이터 저장 , E : object
+
+→ [**add**](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html#add-int-E-)(int index, [**E**](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html) element)  
+
+→ [**get**](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html#get-int-)(int index) : 데이터 읽어오기
+
+→ set(int index,E element)   index : 위치, element : 넣고 싶은 값
+
+생성→ 쓰기에서 캐스팅 되고, 쓰기 → 읽기에서 String으로 다운 캐스팅이 진행 된다 
+
+→ [**size**](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html#size--)() : 전체 크기가 아닌 데이터가 들어가 있는 크기
+
+---
+데이터 삭제 (remove) 시 
+데이터의 중간 값이 삭제 되었을 경우 데이터가 앞으로 당겨지고 뒤의 비어있는 공간은 null 값으로 채워진다
+ex - 
+5  2  4  3  1 에서 4의 값 삭제
+5  2  3  1  null
+---
+
+- linkedlist : 주소|값|주소 구성
+
+→ 화살표로 노드끼리의 주소 포인터를 서로 가리키며 링크(참조)함으로써 이어지는 구조
+
+→ 노드는 하나의 객체. 객체를 만들면 객체의 주소가 생기게 되는데, 노드마다 각기 객체의 주소를 참조함으로서 연결 형태를 구성
+
+→ Arraylist는 중간처리는 굉장히 느리다. linkedlist는 중간에 찾아갈 시간이 필요없고 주소값으로 바로 찾아갈 수 있기 때문에 많은 시간이 필요로 하지 않는다. (중간 데이터 처리가 빠르다)
